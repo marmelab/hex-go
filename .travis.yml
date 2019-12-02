@@ -1,5 +1,7 @@
-language: minimal
+language: go
+services:
+  - docker
 before_script:
-- make install
+  - make install
 script:
-- make test
+  - make test
