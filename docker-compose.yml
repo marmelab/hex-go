@@ -10,5 +10,3 @@ services:
       - ./src/hex:/hex-go/src/hex
       - ./test/hex:/hex-go/test/hex
     command: go run /hex-go/src/hex/main.go
-
-
