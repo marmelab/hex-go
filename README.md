@@ -4,6 +4,11 @@
 
 Go IA for Hex game 
 
+### Requirements
+To launch the docker-compose, you need a docker-compose binary supporting `version: 3.7`.
+
+More details [here](https://docs.docker.com/compose/install/)
+
 ## Installation
 
 ```bash
