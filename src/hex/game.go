@@ -5,13 +5,7 @@ const PLAYER1 = 1
 const PLAYER2 = 2
 
 func getDirections(player int) [6][2]int {
-	directions := [6][2]int{}
-	if player == PLAYER1 {
-		directions = [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {1, 1}}
-	} else if player == PLAYER2 {
-		directions = [6][2]int{{1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1}}
-	}
-	return directions
+	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {1, 1}}
 }
 
 func buildFromMatrix(matrix [][]int) []stone {
