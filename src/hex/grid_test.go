@@ -14,7 +14,7 @@ func TestUserCanBuildAGridBasedOnMatrix(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	got := buildFromMatrix(matrix)
+	got := getStonesFromMatrix(matrix)
 
 	expected := *NewStone(0, 0, 0)
 	if got[0] != expected {
@@ -75,7 +75,7 @@ func TestUserCanGetNeighborsForStone(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	stones := buildFromMatrix(matrix)
+	stones := getStonesFromMatrix(matrix)
 
 	stone := *NewStone(1, 1, PLAYER1)
 	got := getNeighborsForStone(stones, stone)
@@ -103,7 +103,7 @@ func TestUserCanLoadStoneWithCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := buildFromMatrix(matrix)
+	stones := getStonesFromMatrix(matrix)
 
 	got, err := loadStoneByCoord(stones, 2, 1)
 
@@ -126,7 +126,7 @@ func TestUserCant(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := buildFromMatrix(matrix)
+	stones := getStonesFromMatrix(matrix)
 
 	got, err := loadStoneByCoord(stones, -1, -1)
 

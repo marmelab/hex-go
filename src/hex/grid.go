@@ -15,7 +15,7 @@ func getDirections(player int) [6][2]int {
 	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {1, 1}}
 }
 
-func buildFromMatrix(matrix [][]int) []stone {
+func getStonesFromMatrix(matrix [][]int) []stone {
 
 	length := len(matrix)
 	stones := make([]stone, length*length)
