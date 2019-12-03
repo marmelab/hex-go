@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 )
 
 // @todo: Move this file in his own package
@@ -35,27 +34,6 @@ func getStonesFromMatrix(matrix [][]int) []stone {
 	}
 
 	return stones
-}
-
-func getNeighborsForStone(stones []stone, stone stone) [6]node {
-	directions := getDirections(stone.player)
-	neighbors := [6]node{}
-
-	for i, direction := range directions {
-		xNeighbor := stone.x + direction[0]
-		yNeighbor := stone.y + direction[1]
-
-		if neighborStone, err := loadStoneByCoord(stones, xNeighbor, yNeighbor); err != nil {
-			fmt.Println("Error occured: ", err)
-		} else {
-			distance := getDistanceBetweenTwoNeighborsStones(stone, neighborStone)
-			if distance >= 0 {
-				neighbors[i] = *NewNode(xNeighbor, yNeighbor, distance)
-			}
-		}
-	}
-
-	return neighbors
 }
 
 func loadStoneByCoord(stones []stone, x int, y int) (stone, error) {

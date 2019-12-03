@@ -9,3 +9,8 @@ type stone struct {
 func NewStone(x int, y int, player int) *stone {
 	return &stone{x: x, y: y, player: player}
 }
+
+// @todo: Improve this function to reduce memory usage
+func (stone stone) getId() int {
+	return stone.x + ',' + stone.y
+}

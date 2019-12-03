@@ -66,35 +66,6 @@ func TestUserCanCalcDistanceBetweenOwnedCaseAndAnotherPlayerCase(t *testing.T) {
 	}
 }
 
-func TestUserCanGetNeighborsForStone(t *testing.T) {
-	matrix := [][]int{
-		{0, 1, 1, 0, 2},
-		{0, 1, 2, 2, 2},
-		{0, 1, 0, 0, 2},
-		{1, 1, 1, 0, 2},
-		{1, 0, 0, 0, 2},
-	}
-
-	stones := getStonesFromMatrix(matrix)
-
-	stone := *NewStone(1, 1, PLAYER1)
-	got := getNeighborsForStone(stones, stone)
-
-	expected := [6]node{
-		*NewNode(1, 0, 0),
-		*NewNode(2, 0, 0),
-		{},
-		*NewNode(0, 1, 1),
-		*NewNode(0, 2, 1),
-		*NewNode(2, 2, 1),
-	}
-
-	if got != expected {
-		t.Errorf("got %v; want %v", got, expected)
-	}
-
-}
-
 func TestUserCanLoadStoneWithCoords(t *testing.T) {
 	matrix := [][]int{
 		{0, 1, 1, 0, 2},
