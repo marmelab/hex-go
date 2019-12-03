@@ -48,7 +48,7 @@ func getNeighborsForStone(stones []stone, stone stone) [6]node {
 		if neighborStone, err := loadStoneByCoord(stones, xNeighbor, yNeighbor); err != nil {
 			fmt.Println("Error occured: ", err)
 		} else {
-			distance := getDistanceBetweenTwoStones(stone, neighborStone)
+			distance := getDistanceBetweenTwoNeighborsStones(stone, neighborStone)
 			if distance >= 0 {
 				neighbors[i] = *NewNode(xNeighbor, yNeighbor, distance)
 			}
@@ -67,12 +67,14 @@ func loadStoneByCoord(stones []stone, x int, y int) (stone, error) {
 	return stone{}, errors.New("can't find stone at this position")
 }
 
-func getDistanceBetweenTwoStones(stone1 stone, stone2 stone) int {
+func getDistanceBetweenTwoNeighborsStones(stone1 stone, stone2 stone) int {
 	if stone2.player == EMPTY {
 		return 1
-	} else if stone1.player == stone2.player {
-		return 0
-	} else {
-		return -1
 	}
+
+	if stone1.player == stone2.player {
+		return 0
+	}
+
+	return -1
 }

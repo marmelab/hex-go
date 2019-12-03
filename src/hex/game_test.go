@@ -31,7 +31,7 @@ func TestUserCanCalcDistanceBetweenEmptyCaseAndOwnedCase(t *testing.T) {
 	stone1 := NewStone(0, 0, PLAYER1)
 	stone2 := NewStone(0, 0, EMPTY)
 
-	got := getDistanceBetweenTwoStones(*stone1, *stone2)
+	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
 
 	expected := 1
 
@@ -44,7 +44,7 @@ func TestUserCanCalcDistanceBetweenTwoOwnedCase(t *testing.T) {
 	stone1 := NewStone(0, 0, PLAYER1)
 	stone2 := NewStone(0, 0, PLAYER1)
 
-	got := getDistanceBetweenTwoStones(*stone1, *stone2)
+	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
 
 	expected := 0
 
@@ -57,7 +57,7 @@ func TestUserCanCalcDistanceBetweenOwnedCaseAndAnotherPlayerCase(t *testing.T) {
 	stone1 := NewStone(0, 0, PLAYER1)
 	stone2 := NewStone(0, 0, PLAYER2)
 
-	got := getDistanceBetweenTwoStones(*stone1, *stone2)
+	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
 
 	expected := -1
 
