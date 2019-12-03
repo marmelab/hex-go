@@ -1,5 +1,10 @@
 package main
 
+import (
+	"errors"
+	"fmt"
+)
+
 // @todo: Move this file in his own package
 
 const EMPTY = 0
@@ -40,24 +45,26 @@ func getNeighborsForStone(stones []stone, stone stone) [6]node {
 		xNeighbor := stone.x + direction[0]
 		yNeighbor := stone.y + direction[1]
 
-		neighborStone := loadStoneByCoord(stones, xNeighbor, yNeighbor)
-		distance := getDistanceBetweenTwoStones(stone, neighborStone)
-
-		if distance >= 0 {
-			neighbors[i] = *NewNode(xNeighbor, yNeighbor, distance)
+		if neighborStone, err := loadStoneByCoord(stones, xNeighbor, yNeighbor); err != nil {
+			fmt.Println("Error occured: ", err)
+		} else {
+			distance := getDistanceBetweenTwoStones(stone, neighborStone)
+			if distance >= 0 {
+				neighbors[i] = *NewNode(xNeighbor, yNeighbor, distance)
+			}
 		}
 	}
 
 	return neighbors
 }
 
-func loadStoneByCoord(stones []stone, x int, y int) stone {
+func loadStoneByCoord(stones []stone, x int, y int) (stone, error) {
 	for _, stone := range stones {
 		if stone.x == x && stone.y == y {
-			return stone
+			return stone, nil
 		}
 	}
-	return stone{}
+	return stone{}, errors.New("can't find stone at this position")
 }
 
 func getDistanceBetweenTwoStones(stone1 stone, stone2 stone) int {

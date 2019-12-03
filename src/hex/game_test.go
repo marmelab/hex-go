@@ -105,11 +105,38 @@ func TestUserCanLoadStoneWithCoords(t *testing.T) {
 	}
 	stones := buildFromMatrix(matrix)
 
-	got := loadStoneByCoord(stones, 2, 1)
+	got, err := loadStoneByCoord(stones, 2, 1)
 
 	expected := *NewStone(2, 1, 2)
 
 	if got != expected {
 		t.Errorf("got %v; want %v", got, expected)
+	}
+
+	if err != nil {
+		t.Errorf("got %v; want nil", got)
+	}
+}
+
+func TestUserCant(t *testing.T) {
+	matrix := [][]int{
+		{0, 1, 1, 0, 2},
+		{0, 1, 2, 2, 2},
+		{0, 1, 0, 0, 2},
+		{1, 1, 1, 0, 2},
+		{1, 0, 0, 0, 2},
+	}
+	stones := buildFromMatrix(matrix)
+
+	got, err := loadStoneByCoord(stones, -1, -1)
+
+	expected := stone{}
+
+	if got != expected {
+		t.Errorf("got %v; want %v", got, expected)
+	}
+
+	if err == nil {
+		t.Errorf("got %v; want not nil", err)
 	}
 }
