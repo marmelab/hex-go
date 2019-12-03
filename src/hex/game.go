@@ -1,5 +1,7 @@
 package main
 
+// @todo: Move this file in his own package
+
 const EMPTY = 0
 const PLAYER1 = 1
 const PLAYER2 = 2
@@ -16,6 +18,8 @@ func buildFromMatrix(matrix [][]int) []stone {
 
 	for y, line := range matrix {
 		for x, value := range line {
+
+			// @todo: Refactor this (Make a function ?)
 			player := EMPTY
 			if value == PLAYER1 || value == PLAYER2 {
 				player = value
