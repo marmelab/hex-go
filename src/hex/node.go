@@ -8,7 +8,5 @@ type node struct {
 }
 
 func NewNode(x int, y int, distance int) *node {
-
-	stone := node{fmt.Sprintf("%d,%d", x, y), distance}
-	return &stone
+	return &node{fmt.Sprintf("%d,%d", x, y), distance}
 }
