@@ -1,4 +1,4 @@
-.PHONY: default install start test
+.PHONY: default install start test stop
 
 .DEFAULT_GOAL := help
 
@@ -10,14 +10,19 @@ GID = $(shell id -g)
 BIN = docker-compose run \
     --rm hex-go
 
-install: ## Install project's dependencies
-	@echo "Install project deps"
-	docker-compose build
-
 start: ## Start project
 	@echo "Start the project"
 	docker-compose up
 
+stop: ## Stop project
+	@echo "Stop the project"
+	docker-compose down
+
 test: ## Launch the project's tests
 	@echo "Launch the tests"
 	$(BIN) go test -v ./src/hex
+
+install: ## Install project's dependencies
+	@echo "Install project deps"
+	docker-compose build
+	$(BIN) go get ./src/hex/...
