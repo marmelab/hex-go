@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/RyanCarrier/dijkstra"
-	"math"
 )
 
 const StartVertexId = 0
+
+const WeightOwned = 1
+const WeightNotOwned = 0
 
 func buildGraphForPlayer1(stones []Stone, width int) *dijkstra.Graph {
 	graph := dijkstra.NewGraph()
@@ -44,10 +46,8 @@ func GetEndVertexId(width int) int {
 
 func addPlayer1StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int) {
 	for _, stone := range stones[:width] {
-		// @todo: Check if there's another (clearer) way to do.
-		distance := int64(math.Abs(float64(stone.player - 1)))
-
-		if nil != graph.AddArc(StartVertexId, stone.id, distance) {
+		weight := getWeight(Player1, stone)
+		if nil != graph.AddArc(StartVertexId, stone.id, weight) {
 			fmt.Errorf("error during Arc insertion")
 		}
 	}
@@ -57,10 +57,10 @@ func addPlayer2StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int
 	columnIndex := 1
 	for i := range stones {
 		if i == columnIndex {
-			// @todo: Check if there's another (clearer) way to do.
-			distance := int64(math.Abs(float64(stones[i-1].player - 2)))
+			currentStone := stones[i-1]
+			weight := getWeight(Player1, currentStone)
 
-			if nil != graph.AddArc(StartVertexId, stones[i-1].id, distance) {
+			if nil != graph.AddArc(StartVertexId, currentStone.id, weight) {
 				fmt.Errorf("error during Arc insertion")
 			}
 
@@ -72,10 +72,9 @@ func addPlayer2StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int
 func addPlayer1EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, EndVertexId int) {
 	offset := (width * width) - width
 	for _, stone := range stones[offset:] {
-		// @todo: Check if there's another (clearer) way to do.
-		distance := int64(math.Abs(float64(stone.player - 1)))
+		weight := getWeight(Player1, stone)
 
-		if nil != graph.AddArc(stone.id, EndVertexId, distance) {
+		if nil != graph.AddArc(stone.id, EndVertexId, weight) {
 			fmt.Errorf("error during Arc insertion")
 		}
 	}
@@ -85,15 +84,23 @@ func addPlayer2EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, 
 	columnIndex := width
 	for i := range stones {
 		if i == columnIndex {
-			// @todo: Check if there's another (clearer) way to do.
-			distance := int64(math.Abs(float64(stones[i-1].player - 2)))
+			currentStone := stones[i-1]
+			weight := getWeight(Player1, currentStone)
 
-			if nil != graph.AddArc(stones[i-1].id, EndVertexId, distance) {
+			if nil != graph.AddArc(currentStone.id, EndVertexId, weight) {
 				fmt.Errorf("error during Arc insertion")
 			}
 			columnIndex = columnIndex + width
 		}
 	}
+}
+
+func getWeight(player int, stone Stone) int64 {
+	if player == stone.player {
+		return WeightOwned
+	}
+
+	return WeightNotOwned
 }
 
 func addArcsToGraph(stones []Stone, graph *dijkstra.Graph, player int) {
