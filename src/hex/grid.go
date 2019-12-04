@@ -12,7 +12,7 @@ const Player2 = 2
 
 const DistanceOwned = 0
 const DistanceEmpty = 1
-const DistanceAdversary = -1
+const DistanceOpponent = -1
 
 func getDirections() [6][2]int {
 	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {0, 1}}
@@ -60,5 +60,5 @@ func getDistanceBetweenTwoNeighborsStones(stone1 Stone, stone2 Stone) int {
 		return DistanceOwned
 	}
 
-	return DistanceAdversary
+	return DistanceOpponent
 }

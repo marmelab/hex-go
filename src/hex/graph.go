@@ -10,8 +10,8 @@ const StartVertexId = 0
 
 func buildGraphForPlayer1(stones []Stone, width int) *dijkstra.Graph {
 	graph := dijkstra.NewGraph()
-	endVertexId := width*width + 1
-
+	endVertexId := GetEndVertexId(width)
+	
 	graph.AddVertex(StartVertexId)
 	addPlayer1VertexToGraph(stones, graph)
 	graph.AddVertex(endVertexId)
