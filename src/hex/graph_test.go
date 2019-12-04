@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 	"testing"
 )
@@ -40,9 +39,6 @@ func TestUserCanDetectTheShortestPathForPlayer1(t *testing.T) {
 
 	stones := getStonesFromMatrix(matrix)
 	graph := buildGraphForPlayer1(stones, width)
-
-	graph.ExportToFile("test.txt")
-	fmt.Println(graph.Shortest(StartVertexId, endVertexId))
 
 	path := []int{StartVertexId, 2, 5, 8, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
