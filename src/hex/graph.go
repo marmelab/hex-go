@@ -11,13 +11,13 @@ const StartVertexId = 0
 func buildGraphForPlayer1(stones []Stone, width int) *dijkstra.Graph {
 	graph := dijkstra.NewGraph()
 	endVertexId := GetEndVertexId(width)
-	
+
 	graph.AddVertex(StartVertexId)
-	addPlayer1VertexToGraph(stones, graph)
+	addVertexToGraph(stones, graph, Player1)
 	graph.AddVertex(endVertexId)
 
 	addPlayer1StartArcsToGraph(stones, graph, width)
-	addPlayer1ArcsToGraph(stones, graph)
+	addArcsToGraph(stones, graph, Player1)
 	addPlayer1EndArcsToGraph(stones, graph, width, endVertexId)
 
 	return graph
@@ -28,11 +28,11 @@ func buildGraphForPlayer2(stones []Stone, width int) *dijkstra.Graph {
 	endVertexId := GetEndVertexId(width)
 
 	graph.AddVertex(StartVertexId)
-	addPlayer2VertexToGraph(stones, graph)
+	addVertexToGraph(stones, graph, Player2)
 	graph.AddVertex(endVertexId)
 
 	addPlayer2StartArcsToGraph(stones, graph, width)
-	addPlayer2ArcsToGraph(stones, graph)
+	addArcsToGraph(stones, graph, Player2)
 	addPlayer2EndArcsToGraph(stones, graph, width, endVertexId)
 
 	return graph
@@ -96,9 +96,9 @@ func addPlayer2EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, 
 	}
 }
 
-func addPlayer1ArcsToGraph(stones []Stone, graph *dijkstra.Graph) {
+func addArcsToGraph(stones []Stone, graph *dijkstra.Graph, player int) {
 	for _, stone := range stones {
-		if stone.player == Player1 || stone.player == Empty {
+		if stone.player == player || stone.player == Empty {
 			for _, neighbor := range getNeighborsForStone(stones, stone) {
 				graph.AddArc(stone.id, neighbor.stone.id, int64(neighbor.distance))
 			}
@@ -106,27 +106,9 @@ func addPlayer1ArcsToGraph(stones []Stone, graph *dijkstra.Graph) {
 	}
 }
 
-func addPlayer2ArcsToGraph(stones []Stone, graph *dijkstra.Graph) {
+func addVertexToGraph(stones []Stone, graph *dijkstra.Graph, player int) {
 	for _, stone := range stones {
-		if stone.player == Player2 || stone.player == Empty {
-			for _, neighbor := range getNeighborsForStone(stones, stone) {
-				graph.AddArc(stone.id, neighbor.stone.id, int64(neighbor.distance))
-			}
-		}
-	}
-}
-
-func addPlayer1VertexToGraph(stones []Stone, graph *dijkstra.Graph) {
-	for _, stone := range stones {
-		if stone.player == Player1 || stone.player == Empty {
-			graph.AddVertex(stone.id)
-		}
-	}
-}
-
-func addPlayer2VertexToGraph(stones []Stone, graph *dijkstra.Graph) {
-	for _, stone := range stones {
-		if stone.player == Player2 || stone.player == Empty {
+		if stone.player == player || stone.player == Empty {
 			graph.AddVertex(stone.id)
 		}
 	}
