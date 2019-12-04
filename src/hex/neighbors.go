@@ -1,21 +1,19 @@
 package main
 
-import "fmt"
-
-type neighbor struct {
-	name     string
+type Neighbor struct {
+	stone    Stone
 	distance int
 }
 
-func NewNeighbor(x int, y int, distance int) *neighbor {
-	return &neighbor{fmt.Sprintf("%d,%d", x, y), distance}
+func NewNeighbor(stone Stone, distance int) *Neighbor {
+	return &Neighbor{stone, distance}
 }
 
-func getNeighborsForStone(stones []stone, stone stone) []neighbor {
-	directions := getDirections(stone.player)
+func getNeighborsForStone(stones []Stone, stone Stone) []Neighbor {
+	directions := getDirections()
 	directionCount := len(directions)
 
-	neighbors := make([]neighbor, directionCount)
+	neighbors := make([]Neighbor, directionCount)
 	neighborsCount := directionCount
 
 	for _, direction := range directions {
@@ -26,22 +24,11 @@ func getNeighborsForStone(stones []stone, stone stone) []neighbor {
 
 			distance := getDistanceBetweenTwoNeighborsStones(stone, neighborStone)
 			if distance >= 0 {
-				neighbors = append(neighbors, *NewNeighbor(xNeighbor, yNeighbor, distance))
+				neighbors = append(neighbors, *NewNeighbor(neighborStone, distance))
 			} else {
 				neighborsCount--
 			}
 		}
 	}
 	return neighbors[directionCount:]
-}
-
-func getAllNeighborsForStones(stones []stone) [][]neighbor {
-	neighbors := make([][]neighbor, len(stones))
-	neighbors = neighbors[:0]
-
-	for _, stone := range stones {
-		neighbors = append(neighbors, getNeighborsForStone(stones, stone))
-	}
-
-	return neighbors
 }

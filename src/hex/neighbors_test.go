@@ -15,21 +15,21 @@ func TestUserCanGetNeighborsForStone(t *testing.T) {
 
 	stones := getStonesFromMatrix(matrix)
 
-	stone := *NewStone(1, 1, PLAYER1)
+	stone := *NewStone(1, 1, 1, Player1)
 
 	got := getNeighborsForStone(stones, stone)
 
-	expected := []neighbor{
-		*NewNeighbor(1, 0, 0),
-		*NewNeighbor(2, 0, 0),
-		*NewNeighbor(0, 1, 1),
-		*NewNeighbor(0, 2, 1),
-		*NewNeighbor(2, 2, 1),
+	expected := []Neighbor{
+		*NewNeighbor(*NewStone(2, 1, 0, Player1), 0),
+		*NewNeighbor(*NewStone(3, 2, 0, Player1), 0),
+		*NewNeighbor(*NewStone(6, 0, 1, Empty), 1),
+		*NewNeighbor(*NewStone(11, 0, 2, Empty), 1),
+		*NewNeighbor(*NewStone(12, 1, 2, Player1), 0),
 	}
 
 	for i, neighbor := range expected {
 		if got[i] != neighbor {
-			t.Errorf("got %v; want %v", got, neighbor)
+			t.Errorf("got %v; want %v", got[i], neighbor)
 		}
 	}
 }

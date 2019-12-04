@@ -1,16 +1,12 @@
 package main
 
-type stone struct {
+type Stone struct {
+	id     int
 	x      int
 	y      int
 	player int
 }
 
-func NewStone(x int, y int, player int) *stone {
-	return &stone{x: x, y: y, player: player}
-}
-
-// @todo: Improve this function to reduce memory usage
-func (stone stone) getId() int {
-	return stone.x + ',' + stone.y
+func NewStone(id int, x int, y int, player int) *Stone {
+	return &Stone{id: id, x: x, y: y, player: player}
 }
