@@ -11,9 +11,7 @@ func NewNeighbor(stone Stone, distance int) *Neighbor {
 
 func getNeighborsForStone(stones []Stone, stone Stone) []Neighbor {
 	directions := getDirections()
-	directionCount := len(directions)
-
-	neighbors := make([]Neighbor, directionCount)
+	var neighbors []Neighbor
 
 	for _, direction := range directions {
 		xNeighbor := stone.x + direction[0]
@@ -26,5 +24,5 @@ func getNeighborsForStone(stones []Stone, stone Stone) []Neighbor {
 			}
 		}
 	}
-	return neighbors[directionCount:]
+	return neighbors
 }
