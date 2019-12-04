@@ -1,11 +1,12 @@
 package main
 
-type stone struct {
+type Stone struct {
+	id     int
 	x      int
 	y      int
 	player int
 }
 
-func NewStone(x int, y int, player int) *stone {
-	return &stone{x: x, y: y, player: player}
+func NewStone(id int, x int, y int, player int) *Stone {
+	return &Stone{id: id, x: x, y: y, player: player}
 }
