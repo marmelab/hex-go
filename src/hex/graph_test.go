@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 	"testing"
 )
@@ -27,7 +28,7 @@ func TestUserCanBuildGraphForPlayer1(t *testing.T) {
 
 }
 
-func TestUserCanDetectVictoryOfPlayer1(t *testing.T) {
+func TestUserCanDetectTheShortestPathForPlayer1(t *testing.T) {
 	matrix := [][]int{
 		{0, 1, 0},
 		{2, 1, 0},
@@ -39,6 +40,9 @@ func TestUserCanDetectVictoryOfPlayer1(t *testing.T) {
 
 	stones := getStonesFromMatrix(matrix)
 	graph := buildGraphForPlayer1(stones, width)
+
+	graph.ExportToFile("test.txt")
+	fmt.Println(graph.Shortest(StartVertexId, endVertexId))
 
 	path := []int{StartVertexId, 2, 5, 8, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
@@ -58,7 +62,7 @@ func TestUserCanDetectVictoryOfPlayer1(t *testing.T) {
 	}
 }
 
-func TestUserCanDetectVictoryOfPlayer2(t *testing.T) {
+func TestUserCanDetectTheShortestPathForPlayer2(t *testing.T) {
 	matrix := [][]int{
 		{0, 1, 2},
 		{1, 2, 0},
@@ -70,8 +74,6 @@ func TestUserCanDetectVictoryOfPlayer2(t *testing.T) {
 
 	stones := getStonesFromMatrix(matrix)
 	graph := buildGraphForPlayer2(stones, width)
-
-	graph.ExportToFile("test.txt")
 
 	path := []int{StartVertexId, 7, 5, 3, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
