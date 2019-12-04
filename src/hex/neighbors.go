@@ -14,19 +14,15 @@ func getNeighborsForStone(stones []Stone, stone Stone) []Neighbor {
 	directionCount := len(directions)
 
 	neighbors := make([]Neighbor, directionCount)
-	neighborsCount := directionCount
 
 	for _, direction := range directions {
 		xNeighbor := stone.x + direction[0]
 		yNeighbor := stone.y + direction[1]
 
 		if neighborStone, err := loadStoneByCoord(stones, xNeighbor, yNeighbor); err == nil {
-
 			distance := getDistanceBetweenTwoNeighborsStones(stone, neighborStone)
 			if distance >= 0 {
 				neighbors = append(neighbors, *NewNeighbor(neighborStone, distance))
-			} else {
-				neighborsCount--
 			}
 		}
 	}
