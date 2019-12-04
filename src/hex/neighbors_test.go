@@ -17,7 +17,7 @@ func TestUserCanGetNeighborsForStone(t *testing.T) {
 
 	stone := *NewStone(7, 1, 1, Player1)
 
-	got := getNeighborsForStone(stones, stone)
+	got := getNeighborsForStone(stones, stone, Player1)
 
 	expected := []Neighbor{
 		*NewNeighbor(*NewStone(2, 1, 0, Player1), 0),
@@ -47,7 +47,7 @@ func TestUserCanGetNeighborsForStoneInEdge(t *testing.T) {
 
 	stone := *NewStone(1, 0, 0, Player1)
 
-	got := getNeighborsForStone(stones, stone)
+	got := getNeighborsForStone(stones, stone, Player1)
 
 	expected := []Neighbor{
 		*NewNeighbor(*NewStone(2, 1, 0, Player1), 0),

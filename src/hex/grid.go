@@ -51,12 +51,12 @@ func loadStoneByCoord(stones []Stone, x int, y int) (Stone, error) {
 	return Stone{}, errors.New("can't find Stone at this position")
 }
 
-func getDistanceBetweenTwoNeighborsStones(stone1 Stone, stone2 Stone) int {
+func getDistanceByTypeOfStone(player int, stone2 Stone) int {
 	if stone2.player == Empty {
 		return DistanceEmpty
 	}
 
-	if stone1.player == stone2.player {
+	if player == stone2.player {
 		return DistanceOwned
 	}
 
