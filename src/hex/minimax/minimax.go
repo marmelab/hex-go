@@ -12,8 +12,7 @@ func getAllPossibleGrids(stones []grid.Stone, player int) [][]grid.Stone {
 
 		if stone.Player == grid.Empty {
 			stonesCopy := append(make([]grid.Stone, 0, size), stones...)
-			stone.Player = player
-			stonesCopy[i] = stone
+			stonesCopy[i].Player = player
 
 			gridPossibilities = append(gridPossibilities, stonesCopy)
 		}
