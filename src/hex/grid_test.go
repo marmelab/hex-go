@@ -28,10 +28,9 @@ func TestUserCanBuildAGridBasedOnMatrix(t *testing.T) {
 }
 
 func TestUserCanCalcDistanceBetweenEmptyCaseAndOwnedCase(t *testing.T) {
-	stone1 := NewStone(1, 0, 0, Player1)
 	stone2 := NewStone(1, 0, 0, Empty)
 
-	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
+	got := getDistanceByTypeOfStone(Player1, *stone2)
 
 	expected := 1
 
@@ -41,10 +40,9 @@ func TestUserCanCalcDistanceBetweenEmptyCaseAndOwnedCase(t *testing.T) {
 }
 
 func TestUserCanCalcDistanceBetweenTwoOwnedCase(t *testing.T) {
-	stone1 := NewStone(1, 0, 0, Player1)
 	stone2 := NewStone(1, 0, 0, Player1)
 
-	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
+	got := getDistanceByTypeOfStone(Player1, *stone2)
 
 	expected := 0
 
@@ -54,10 +52,9 @@ func TestUserCanCalcDistanceBetweenTwoOwnedCase(t *testing.T) {
 }
 
 func TestUserCanCalcDistanceBetweenOwnedCaseAndAnotherPlayerCase(t *testing.T) {
-	stone1 := NewStone(1, 0, 0, Player1)
 	stone2 := NewStone(1, 0, 0, Player2)
 
-	got := getDistanceBetweenTwoNeighborsStones(*stone1, *stone2)
+	got := getDistanceByTypeOfStone(Player1, *stone2)
 
 	expected := -1
 

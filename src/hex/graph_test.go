@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 	"testing"
 )
@@ -13,9 +12,7 @@ func TestUserCanBuildGraphForPlayer1(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	width := len(matrix)
-	stones := getStonesFromMatrix(matrix)
-	graph := buildGraphForPlayer1(stones, width)
+	graph, _ := bootstrapGraphPlayer1(matrix)
 
 	path := []int{2, 5, 8, 9}
 	expected := dijkstra.BestPath{Distance: int64(1), Path: path}
@@ -35,14 +32,7 @@ func TestUserCanDetectTheShortestPathForPlayer1(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	width := len(matrix)
-	endVertexId := GetEndVertexId(width)
-
-	stones := getStonesFromMatrix(matrix)
-	graph := buildGraphForPlayer1(stones, width)
-
-	graph.ExportToFile("test.txt")
-	fmt.Println(graph.Shortest(StartVertexId, endVertexId))
+	graph, endVertexId := bootstrapGraphPlayer1(matrix)
 
 	path := []int{StartVertexId, 2, 5, 8, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
@@ -69,12 +59,8 @@ func TestUserCanDetectTheShortestPathForPlayer2(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	width := len(matrix)
-	endVertexId := GetEndVertexId(width)
-
-	stones := getStonesFromMatrix(matrix)
-	graph := buildGraphForPlayer2(stones, width)
-
+	graph, endVertexId := bootstrapGraphPlayer2(matrix)
+	
 	path := []int{StartVertexId, 7, 5, 3, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
 

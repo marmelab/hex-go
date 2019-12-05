@@ -7,9 +7,6 @@ import (
 
 const StartVertexId = 0
 
-const distanceOwned = 0
-const distanceNotOwned = 1
-
 func buildGraphForPlayer1(stones []Stone, width int) *dijkstra.Graph {
 	graph := dijkstra.NewGraph()
 	endVertexId := GetEndVertexId(width)
@@ -46,8 +43,8 @@ func GetEndVertexId(width int) int {
 
 func addPlayer1StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int) {
 	for _, stone := range stones[:width] {
-
-		if nil != graph.AddArc(StartVertexId, stone.id, DistanceOwned) {
+		distance := getDistance(Player1, stone)
+		if nil != graph.AddArc(StartVertexId, stone.id, distance) {
 			fmt.Errorf("error during Arc insertion")
 		}
 	}
@@ -58,8 +55,9 @@ func addPlayer2StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int
 	for i := range stones {
 		if i == columnIndex {
 			currentStone := stones[i-1]
+			distance := getDistance(Player2, currentStone)
 
-			if nil != graph.AddArc(StartVertexId, currentStone.id, DistanceOwned) {
+			if nil != graph.AddArc(StartVertexId, currentStone.id, distance) {
 				fmt.Errorf("error during Arc insertion")
 			}
 
@@ -71,7 +69,9 @@ func addPlayer2StartArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int
 func addPlayer1EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, EndVertexId int) {
 	offset := (width * width) - width
 	for _, stone := range stones[offset:] {
-		if nil != graph.AddArc(stone.id, EndVertexId, DistanceOwned) {
+		distance := getDistance(Player1, stone)
+
+		if nil != graph.AddArc(stone.id, EndVertexId, distance) {
 			fmt.Errorf("error during Arc insertion")
 		}
 	}
@@ -82,7 +82,9 @@ func addPlayer2EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, 
 	for i := range stones {
 		if i == columnIndex {
 			currentStone := stones[i-1]
-			if nil != graph.AddArc(currentStone.id, EndVertexId, DistanceOwned) {
+			distance := getDistance(Player2, currentStone)
+
+			if nil != graph.AddArc(currentStone.id, EndVertexId, distance) {
 				fmt.Errorf("error during Arc insertion")
 			}
 			columnIndex = columnIndex + width
@@ -90,10 +92,18 @@ func addPlayer2EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, 
 	}
 }
 
+func getDistance(player int, stone Stone) int64 {
+	if player == stone.player {
+		return DistanceOwned
+	}
+
+	return DistanceEmpty
+}
+
 func addArcsToGraph(stones []Stone, graph *dijkstra.Graph, player int) {
 	for _, stone := range stones {
 		if stone.player == player || stone.player == Empty {
-			for _, neighbor := range getNeighborsForStone(stones, stone) {
+			for _, neighbor := range getNeighborsForStone(stones, stone, player) {
 				graph.AddArc(stone.id, neighbor.stone.id, int64(neighbor.distance))
 			}
 		}
