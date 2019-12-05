@@ -51,7 +51,7 @@ func TestUserCanKnowIfTheGameIsWon(t *testing.T) {
 
 	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
 
-	got := isWon(bestPath)
+	got := IsWon(bestPath)
 
 	if got != true {
 		t.Errorf("got %t; want true", got)
