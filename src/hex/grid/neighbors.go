@@ -1,15 +1,15 @@
-package main
+package grid
 
 type Neighbor struct {
-	stone    Stone
-	distance int
+	Stone    Stone
+	Distance int
 }
 
 func NewNeighbor(stone Stone, distance int) *Neighbor {
 	return &Neighbor{stone, distance}
 }
 
-func getNeighborsForStone(stones []Stone, stone Stone, player int) []Neighbor {
+func GetNeighborsForStone(stones []Stone, stone Stone, player int) []Neighbor {
 	directions := getDirections()
 	var neighbors []Neighbor
 

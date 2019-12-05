@@ -1,12 +1,12 @@
-package main
+package grid
 
 type Stone struct {
-	id     int
+	Id     int
 	x      int
 	y      int
-	player int
+	Player int
 }
 
 func NewStone(id int, x int, y int, player int) *Stone {
-	return &Stone{id: id, x: x, y: y, player: player}
+	return &Stone{Id: id, x: x, y: y, Player: player}
 }

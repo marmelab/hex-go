@@ -1,10 +1,8 @@
-package main
+package grid
 
 import (
 	"errors"
 )
-
-// @todo: Move this file in his own package
 
 const Empty = 0
 const Player1 = 1
@@ -18,7 +16,7 @@ func getDirections() [6][2]int {
 	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {0, 1}}
 }
 
-func getStonesFromMatrix(matrix [][]int) []Stone {
+func GetStonesFromMatrix(matrix [][]int) []Stone {
 
 	length := len(matrix)
 	stones := make([]Stone, length*length)
@@ -52,11 +50,11 @@ func loadStoneByCoord(stones []Stone, x int, y int) (Stone, error) {
 }
 
 func getDistanceByTypeOfStone(player int, stone2 Stone) int {
-	if stone2.player == Empty {
+	if stone2.Player == Empty {
 		return DistanceEmpty
 	}
 
-	if player == stone2.player {
+	if player == stone2.Player {
 		return DistanceOwned
 	}
 

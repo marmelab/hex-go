@@ -1,4 +1,4 @@
-package main
+package graph
 
 import (
 	"github.com/RyanCarrier/dijkstra"
@@ -12,7 +12,7 @@ func TestUserCanBuildGraphForPlayer1(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	graph, _ := bootstrapGraphPlayer1(matrix)
+	graph, _ := BootstrapGraphPlayer1(matrix)
 
 	path := []int{2, 5, 8, 9}
 	expected := dijkstra.BestPath{Distance: int64(1), Path: path}
@@ -32,7 +32,7 @@ func TestUserCanDetectTheShortestPathForPlayer1(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	graph, endVertexId := bootstrapGraphPlayer1(matrix)
+	graph, endVertexId := BootstrapGraphPlayer1(matrix)
 
 	path := []int{StartVertexId, 2, 5, 8, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
@@ -59,8 +59,8 @@ func TestUserCanDetectTheShortestPathForPlayer2(t *testing.T) {
 		{2, 1, 0},
 	}
 
-	graph, endVertexId := bootstrapGraphPlayer2(matrix)
-	
+	graph, endVertexId := BootstrapGraphPlayer2(matrix)
+
 	path := []int{StartVertexId, 7, 5, 3, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
 

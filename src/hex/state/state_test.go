@@ -1,6 +1,7 @@
-package main
+package state
 
 import (
+	Graph "hex/graph"
 	"testing"
 )
 
@@ -11,9 +12,9 @@ func TestUserCanKnowIfHeCanWinInTheNextMove(t *testing.T) {
 		{2, 0, 0},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer1(matrix)
+	graph, endVertexId := Graph.BootstrapGraphPlayer1(matrix)
 
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
 	got := CanWinInOneTurn(bestPath)
 
@@ -29,9 +30,9 @@ func TestUserCanKnowIfHeCantWinInTheNextMove(t *testing.T) {
 		{2, 0, 2},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer2(matrix)
+	graph, endVertexId := Graph.BootstrapGraphPlayer2(matrix)
 
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
 	got := CanWinInOneTurn(bestPath)
 
@@ -47,9 +48,9 @@ func TestUserCanKnowIfTheGameIsWon(t *testing.T) {
 		{2, 1, 0},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer1(matrix)
+	graph, endVertexId := Graph.BootstrapGraphPlayer1(matrix)
 
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
 	got := IsWon(bestPath)
 
@@ -65,11 +66,11 @@ func TestUserCanKnowIfHeIsClosestThanOpponent(t *testing.T) {
 		{2, 0, 0},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer1(matrix)
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	graph, endVertexId := Graph.BootstrapGraphPlayer1(matrix)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
-	graphOpponent, endVertexIdOpponennt := bootstrapGraphPlayer2(matrix)
-	bestPathOpponent, _ := graphOpponent.Shortest(StartVertexId, endVertexIdOpponennt)
+	graphOpponent, endVertexIdOpponennt := Graph.BootstrapGraphPlayer2(matrix)
+	bestPathOpponent, _ := graphOpponent.Shortest(Graph.StartVertexId, endVertexIdOpponennt)
 
 	got := IsClosestAsOpponent(bestPath, bestPathOpponent)
 
@@ -85,11 +86,11 @@ func TestUserCanKnowIfHeIsNotClosestThanOpponent(t *testing.T) {
 		{2, 2, 0},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer1(matrix)
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	graph, endVertexId := Graph.BootstrapGraphPlayer1(matrix)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
-	graphOpponent, endVertexIdOpponennt := bootstrapGraphPlayer2(matrix)
-	bestPathOpponent, _ := graphOpponent.Shortest(StartVertexId, endVertexIdOpponennt)
+	graphOpponent, endVertexIdOpponennt := Graph.BootstrapGraphPlayer2(matrix)
+	bestPathOpponent, _ := graphOpponent.Shortest(Graph.StartVertexId, endVertexIdOpponennt)
 
 	got := IsClosestAsOpponent(bestPath, bestPathOpponent)
 
@@ -105,8 +106,8 @@ func TestUserCanHaveAnAdviceForHisNextMove(t *testing.T) {
 		{2, 0, 2},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer2(matrix)
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	graph, endVertexId := Graph.BootstrapGraphPlayer2(matrix)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
 	got := AdviceForNextMove(bestPath, graph)
 	expected := 5
@@ -123,8 +124,8 @@ func TestUserCanCheckAnAlreadyWinningGame(t *testing.T) {
 		{2, 2, 2},
 		{2, 1, 0},
 	}
-	graph, endVertexId := bootstrapGraphPlayer2(matrix)
-	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+	graph, endVertexId := Graph.BootstrapGraphPlayer2(matrix)
+	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
 	got := AdviceForNextMove(bestPath, graph)
 	expected := 0
