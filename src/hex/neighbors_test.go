@@ -60,3 +60,30 @@ func TestUserCanGetNeighborsForStoneInEdge(t *testing.T) {
 		}
 	}
 }
+
+func TestUserCanGetNeighborsForAPlayer2Stone(t *testing.T) {
+	matrix := [][]int{
+		{0, 1, 1, 0},
+		{0, 2, 2, 2},
+		{2, 1, 0, 0},
+		{1, 1, 1, 0},
+	}
+
+	stones := getStonesFromMatrix(matrix)
+
+	stone := *NewStone(6, 1, 1, Player2)
+
+	got := getNeighborsForStone(stones, stone, Player2)
+
+	expected := []Neighbor{
+		*NewNeighbor(*NewStone(7, 2, 1, Player2), 0),
+		*NewNeighbor(*NewStone(5, 0, 1, Empty), 1),
+		*NewNeighbor(*NewStone(9, 0, 2, Player2), 0),
+	}
+
+	for i, neighbor := range expected {
+		if got[i] != neighbor {
+			t.Errorf("got %v; want %v", got[i], neighbor)
+		}
+	}
+}

@@ -7,9 +7,6 @@ import (
 
 const StartVertexId = 0
 
-const distanceOwned = 0
-const distanceNotOwned = 1
-
 func buildGraphForPlayer1(stones []Stone, width int) *dijkstra.Graph {
 	graph := dijkstra.NewGraph()
 	endVertexId := GetEndVertexId(width)
@@ -97,10 +94,10 @@ func addPlayer2EndArcsToGraph(stones []Stone, graph *dijkstra.Graph, width int, 
 
 func getDistance(player int, stone Stone) int64 {
 	if player == stone.player {
-		return distanceOwned
+		return DistanceOwned
 	}
 
-	return distanceNotOwned
+	return DistanceEmpty
 }
 
 func addArcsToGraph(stones []Stone, graph *dijkstra.Graph, player int) {
