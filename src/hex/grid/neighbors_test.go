@@ -1,4 +1,4 @@
-package main
+package grid
 
 import (
 	"testing"
@@ -13,11 +13,11 @@ func TestUserCanGetNeighborsForStone(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	stones := getStonesFromMatrix(matrix)
+	stones := GetStonesFromMatrix(matrix)
 
 	stone := *NewStone(7, 1, 1, Player1)
 
-	got := getNeighborsForStone(stones, stone, Player1)
+	got := GetNeighborsForStone(stones, stone, Player1)
 
 	expected := []Neighbor{
 		*NewNeighbor(*NewStone(2, 1, 0, Player1), 0),
@@ -43,11 +43,11 @@ func TestUserCanGetNeighborsForStoneInEdge(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	stones := getStonesFromMatrix(matrix)
+	stones := GetStonesFromMatrix(matrix)
 
 	stone := *NewStone(1, 0, 0, Player1)
 
-	got := getNeighborsForStone(stones, stone, Player1)
+	got := GetNeighborsForStone(stones, stone, Player1)
 
 	expected := []Neighbor{
 		*NewNeighbor(*NewStone(2, 1, 0, Player1), 0),
@@ -69,11 +69,11 @@ func TestUserCanGetNeighborsForAPlayer2Stone(t *testing.T) {
 		{1, 1, 1, 0},
 	}
 
-	stones := getStonesFromMatrix(matrix)
+	stones := GetStonesFromMatrix(matrix)
 
 	stone := *NewStone(6, 1, 1, Player2)
 
-	got := getNeighborsForStone(stones, stone, Player2)
+	got := GetNeighborsForStone(stones, stone, Player2)
 
 	expected := []Neighbor{
 		*NewNeighbor(*NewStone(7, 2, 1, Player2), 0),

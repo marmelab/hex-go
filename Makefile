@@ -1,4 +1,4 @@
-.PHONY: default install start test stop
+.PHONY: default install start test stop clean
 
 .DEFAULT_GOAL := help
 
@@ -20,7 +20,10 @@ stop: ## Stop project
 
 test: ## Launch the project's tests
 	@echo "Launch the tests"
-	$(BIN) go test -v ./src/hex
+	$(BIN) go test -v ./src/hex/...
+clean: ## Clean the project
+	@echo "Cleaning project"
+	$(BIN) rm -Rf pkg bin
 
 install: ## Install project's dependencies
 	@echo "Install project deps"

@@ -1,4 +1,4 @@
-package main
+package grid
 
 import (
 	"testing"
@@ -14,7 +14,7 @@ func TestUserCanBuildAGridBasedOnMatrix(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	got := getStonesFromMatrix(matrix)
+	got := GetStonesFromMatrix(matrix)
 
 	expected := *NewStone(1, 0, 0, 0)
 	if got[0] != expected {
@@ -71,7 +71,7 @@ func TestUserCanLoadStoneWithCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := getStonesFromMatrix(matrix)
+	stones := GetStonesFromMatrix(matrix)
 
 	got, err := loadStoneByCoord(stones, 2, 1)
 
@@ -94,7 +94,7 @@ func TestUserCantGetAStoneWithWrongCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := getStonesFromMatrix(matrix)
+	stones := GetStonesFromMatrix(matrix)
 
 	got, err := loadStoneByCoord(stones, -1, -1)
 
