@@ -115,3 +115,21 @@ func TestUserCanHaveAnAdviceForHisNextMove(t *testing.T) {
 		t.Errorf("got %d; want %d", got, expected)
 	}
 }
+
+func TestUserCanCheckAnAlreadyWinningGame(t *testing.T) {
+
+	matrix := [][]int{
+		{1, 1, 0},
+		{2, 2, 2},
+		{2, 1, 0},
+	}
+	graph, endVertexId := bootstrapGraphPlayer2(matrix)
+	bestPath, _ := graph.Shortest(StartVertexId, endVertexId)
+
+	got := AdviceForNextMove(bestPath, graph)
+	expected := 0
+
+	if got != expected {
+		t.Errorf("got %d; want %d", got, expected)
+	}
+}

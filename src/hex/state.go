@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 )
 
@@ -20,6 +21,12 @@ func AdviceForNextMove(bestPath dijkstra.BestPath, graph *dijkstra.Graph) int {
 
 	for i, id := range bestPath.Path {
 		vertex, _ := graph.GetVertex(id)
+
+		if i+1 >= len(bestPath.Path) {
+			fmt.Errorf("your game seems already won")
+			break
+		}
+
 		next := bestPath.Path[i+1]
 		distance, _ := vertex.GetArc(next)
 
@@ -28,6 +35,6 @@ func AdviceForNextMove(bestPath dijkstra.BestPath, graph *dijkstra.Graph) int {
 		}
 
 	}
+	return 0
 
-	return -1
 }
