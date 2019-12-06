@@ -7,4 +7,4 @@ services:
     working_dir: /go
     volumes:
       - .:/go
-    command: go run /go/src/hex/main.go
+    command: go run /go/src/hex/main.go && tail -f /dev/null

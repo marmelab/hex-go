@@ -12,7 +12,7 @@ BIN = docker-compose run \
 
 start: ## Start project
 	@echo "Start the project"
-	docker-compose up
+	$(BIN) go run /go/src/hex/main.go
 
 stop: ## Stop project
 	@echo "Stop the project"
@@ -21,6 +21,7 @@ stop: ## Stop project
 test: ## Launch the project's tests
 	@echo "Launch the tests"
 	$(BIN) go test -v ./src/hex/...
+
 clean: ## Clean the project
 	@echo "Cleaning project"
 	$(BIN) rm -Rf pkg bin
