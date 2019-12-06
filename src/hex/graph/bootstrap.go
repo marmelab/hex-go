@@ -2,23 +2,19 @@ package graph
 
 import (
 	"github.com/RyanCarrier/dijkstra"
-	"hex/grid"
+	HexGrid "hex/grid"
 )
 
 func BootstrapGraphPlayer1(matrix [][]int) (*dijkstra.Graph, int) {
-	width := len(matrix)
-	endVertexId := GetEndVertexId(width)
+	grid := HexGrid.GetGridFromMatrix(matrix)
+	endVertexId := GetEndVertexId(grid.Width)
 
-	stones := grid.GetStonesFromMatrix(matrix)
-
-	return BuildGraphForPlayer1(stones, width), endVertexId
+	return BuildGraphForPlayer1(grid), endVertexId
 }
 
 func BootstrapGraphPlayer2(matrix [][]int) (*dijkstra.Graph, int) {
-	width := len(matrix)
-	endVertexId := GetEndVertexId(width)
+	grid := HexGrid.GetGridFromMatrix(matrix)
+	endVertexId := GetEndVertexId(grid.Width)
 
-	stones := grid.GetStonesFromMatrix(matrix)
-
-	return BuildGraphForPlayer2(stones, width), endVertexId
+	return BuildGraphForPlayer2(grid), endVertexId
 }

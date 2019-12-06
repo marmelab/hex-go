@@ -1,7 +1,7 @@
 package minimax
 
 import (
-	"hex/grid"
+	HexGrid "hex/grid"
 	"testing"
 )
 
@@ -14,17 +14,18 @@ func TestUserCanGenerateAllGridPossibilitiesForAPlayer(t *testing.T) {
 		{0, 1, 0, 0, 0},
 	}
 
-	stones := grid.GetStonesFromMatrix(matrix)
-	got := getAllPossibleGrids(stones, grid.Player1)
+	grid := HexGrid.GetGridFromMatrix(matrix)
+	got := getAllPossibleGrids(grid, HexGrid.Player1)
 
-	expected := grid.Player1
+	expected := HexGrid.Player1
 
-	if got[0][0].Player != expected {
-		t.Errorf("got %d; want %d", got[0][0], expected)
+	firstGrid := got[0]
+	if firstGrid.Stones[0].Player != expected {
+		t.Errorf("got %d; want %d", firstGrid.Stones[0].Player, expected)
 	}
 
-	if got[5][6].Player != expected {
-		t.Errorf("got %d; want %d", got[5][6].Player, expected)
+	sixth := got[5]
+	if sixth.Stones[6].Player != expected {
+		t.Errorf("got %d; want %d", sixth.Stones[6].Player, expected)
 	}
-
 }

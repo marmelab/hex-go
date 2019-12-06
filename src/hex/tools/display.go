@@ -2,10 +2,10 @@ package tools
 
 import (
 	"fmt"
-	"hex/grid"
+	HexGrid "hex/grid"
 )
 
-func DisplayStonesAsMatrix(stones []grid.Stone, width int) {
+func DisplayStonesAsMatrix(stones []HexGrid.Stone, width int) {
 	for i, stone := range stones {
 		if i%width == 0 {
 			fmt.Println()
