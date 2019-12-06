@@ -14,16 +14,20 @@ func TestUserCanBuildAGridBasedOnMatrix(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	got := GetStonesFromMatrix(matrix)
+	got := GetGridFromMatrix(matrix)
+
+	if got.Width != 5 {
+		t.Errorf("got %d; want 5", got.Width)
+	}
 
 	expected := *NewStone(1, 0, 0, 0)
-	if got[0] != expected {
+	if got.Stones[0] != expected {
 		t.Errorf("got %v; want %v", got, expected)
 	}
 
 	expected2 := *NewStone(25, 4, 4, Player2)
-	if got[24] != expected2 {
-		t.Errorf("got %v; want %v", got[24], expected2)
+	if got.Stones[24] != expected2 {
+		t.Errorf("got %v; want %v", got.Stones[24], expected2)
 	}
 }
 
@@ -71,9 +75,9 @@ func TestUserCanLoadStoneWithCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := GetStonesFromMatrix(matrix)
+	grid := GetGridFromMatrix(matrix)
 
-	got, err := loadStoneByCoord(stones, 2, 1)
+	got, err := loadStoneByCoord(grid, 2, 1)
 
 	expected := *NewStone(8, 2, 1, 2)
 
@@ -94,7 +98,7 @@ func TestUserCantGetAStoneWithWrongCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := GetStonesFromMatrix(matrix)
+	stones := GetGridFromMatrix(matrix)
 
 	got, err := loadStoneByCoord(stones, -1, -1)
 

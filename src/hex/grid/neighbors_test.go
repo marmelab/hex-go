@@ -13,7 +13,7 @@ func TestUserCanGetNeighborsForStone(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	stones := GetStonesFromMatrix(matrix)
+	stones := GetGridFromMatrix(matrix)
 
 	stone := *NewStone(7, 1, 1, Player1)
 
@@ -43,7 +43,7 @@ func TestUserCanGetNeighborsForStoneInEdge(t *testing.T) {
 		{1, 0, 0, 0, 2},
 	}
 
-	stones := GetStonesFromMatrix(matrix)
+	stones := GetGridFromMatrix(matrix)
 
 	stone := *NewStone(1, 0, 0, Player1)
 
@@ -69,7 +69,7 @@ func TestUserCanGetNeighborsForAPlayer2Stone(t *testing.T) {
 		{1, 1, 1, 0},
 	}
 
-	stones := GetStonesFromMatrix(matrix)
+	stones := GetGridFromMatrix(matrix)
 
 	stone := *NewStone(6, 1, 1, Player2)
 

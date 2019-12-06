@@ -3,31 +3,31 @@ package graph
 import (
 	"fmt"
 	"github.com/RyanCarrier/dijkstra"
-	"hex/grid"
+	HexGrid "hex/grid"
 )
 
 const StartVertexId = 0
 
-func BuildGraphForPlayer1(stones []grid.Stone, width int) *dijkstra.Graph {
-	graph := initGraph(width)
+func BuildGraphForPlayer1(grid HexGrid.Grid) *dijkstra.Graph {
+	graph := initGraph(grid.Width)
 
-	addVertexToGraph(stones, graph, grid.Player1)
+	addVertexToGraph(grid, graph, HexGrid.Player1)
 
-	addPlayer1StartArcsToGraph(stones, graph, width)
-	addArcsToGraph(stones, graph, grid.Player1)
-	addPlayer1EndArcsToGraph(stones, graph, width)
+	addPlayer1StartArcsToGraph(grid, graph)
+	addArcsToGraph(grid, graph, HexGrid.Player1)
+	addPlayer1EndArcsToGraph(grid, graph)
 
 	return graph
 }
 
-func BuildGraphForPlayer2(stones []grid.Stone, width int) *dijkstra.Graph {
-	graph := initGraph(width)
+func BuildGraphForPlayer2(grid HexGrid.Grid) *dijkstra.Graph {
+	graph := initGraph(grid.Width)
 
-	addVertexToGraph(stones, graph, grid.Player2)
+	addVertexToGraph(grid, graph, HexGrid.Player2)
 
-	addPlayer2StartArcsToGraph(stones, graph, width)
-	addArcsToGraph(stones, graph, grid.Player2)
-	addPlayer2EndArcsToGraph(stones, graph, width)
+	addPlayer2StartArcsToGraph(grid, graph)
+	addArcsToGraph(grid, graph, HexGrid.Player2)
+	addPlayer2EndArcsToGraph(grid, graph)
 
 	return graph
 }
@@ -46,36 +46,36 @@ func GetEndVertexId(width int) int {
 	return width*width + 1
 }
 
-func addPlayer1StartArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, width int) {
-	for _, stone := range stones[:width] {
-		distance := getDistance(grid.Player1, stone)
+func addPlayer1StartArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
+	for _, stone := range grid.Stones[:grid.Width] {
+		distance := getDistance(HexGrid.Player1, stone)
 		if nil != graph.AddArc(StartVertexId, stone.Id, distance) {
 			fmt.Errorf("error during Arc insertion")
 		}
 	}
 }
 
-func addPlayer2StartArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, width int) {
+func addPlayer2StartArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
 	columnIndex := 1
-	for i := range stones {
+	for i := range grid.Stones {
 		if i == columnIndex {
-			currentStone := stones[i-1]
-			distance := getDistance(grid.Player2, currentStone)
+			currentStone := grid.Stones[i-1]
+			distance := getDistance(HexGrid.Player2, currentStone)
 
 			if nil != graph.AddArc(StartVertexId, currentStone.Id, distance) {
 				fmt.Errorf("error during Arc insertion")
 			}
 
-			columnIndex = columnIndex + width
+			columnIndex = columnIndex + grid.Width
 		}
 	}
 }
 
-func addPlayer1EndArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, width int) {
-	EndVertexId := GetEndVertexId(width)
-	offset := (width * width) - width
-	for _, stone := range stones[offset:] {
-		distance := getDistance(grid.Player1, stone)
+func addPlayer1EndArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
+	EndVertexId := GetEndVertexId(grid.Width)
+	offset := (grid.Width * grid.Width) - grid.Width
+	for _, stone := range grid.Stones[offset:] {
+		distance := getDistance(HexGrid.Player1, stone)
 
 		if nil != graph.AddArc(stone.Id, EndVertexId, distance) {
 			fmt.Errorf("error during Arc insertion")
@@ -83,43 +83,43 @@ func addPlayer1EndArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, width 
 	}
 }
 
-func addPlayer2EndArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, width int) {
-	EndVertexId := GetEndVertexId(width)
-	columnIndex := width
-	for i := range stones {
+func addPlayer2EndArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
+	EndVertexId := GetEndVertexId(grid.Width)
+	columnIndex := grid.Width
+	for i := range grid.Stones {
 		if i == columnIndex {
-			currentStone := stones[i-1]
-			distance := getDistance(grid.Player2, currentStone)
+			currentStone := grid.Stones[i-1]
+			distance := getDistance(HexGrid.Player2, currentStone)
 
 			if nil != graph.AddArc(currentStone.Id, EndVertexId, distance) {
 				fmt.Errorf("error during Arc insertion")
 			}
-			columnIndex = columnIndex + width
+			columnIndex = columnIndex + grid.Width
 		}
 	}
 }
 
-func getDistance(player int, stone grid.Stone) int64 {
+func getDistance(player int, stone HexGrid.Stone) int64 {
 	if player == stone.Player {
-		return grid.DistanceOwned
+		return HexGrid.DistanceOwned
 	}
 
-	return grid.DistanceEmpty
+	return HexGrid.DistanceEmpty
 }
 
-func addArcsToGraph(stones []grid.Stone, graph *dijkstra.Graph, player int) {
-	for _, stone := range stones {
-		if stone.Player == player || stone.Player == grid.Empty {
-			for _, neighbor := range grid.GetNeighborsForStone(stones, stone, player) {
+func addArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph, player int) {
+	for _, stone := range grid.Stones {
+		if stone.Player == player || stone.Player == HexGrid.Empty {
+			for _, neighbor := range HexGrid.GetNeighborsForStone(grid, stone, player) {
 				graph.AddArc(stone.Id, neighbor.Stone.Id, int64(neighbor.Distance))
 			}
 		}
 	}
 }
 
-func addVertexToGraph(stones []grid.Stone, graph *dijkstra.Graph, player int) {
-	for _, stone := range stones {
-		if stone.Player == player || stone.Player == grid.Empty {
+func addVertexToGraph(grid HexGrid.Grid, graph *dijkstra.Graph, player int) {
+	for _, stone := range grid.Stones {
+		if stone.Player == player || stone.Player == HexGrid.Empty {
 			graph.AddVertex(stone.Id)
 		}
 	}

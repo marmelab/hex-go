@@ -12,36 +12,51 @@ const DistanceOwned = 0
 const DistanceEmpty = 1
 const DistanceOpponent = -1
 
+type Grid struct {
+	Stones []Stone
+	Width  int
+}
+
+func NewGrid(stones []Stone, width int) *Grid {
+	return &Grid{Stones: stones, Width: width}
+}
+
 func getDirections() [6][2]int {
 	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {0, 1}}
 }
 
-func GetStonesFromMatrix(matrix [][]int) []Stone {
+func GetGridFromMatrix(matrix [][]int) Grid {
 
-	length := len(matrix)
-	stones := make([]Stone, length*length)
+	width := len(matrix)
+	stones := make([]Stone, width*width)
 	stones = stones[:0]
 
+	grid := NewGrid(stones, width)
 	count := 0
 	for y, line := range matrix {
 		for x, value := range line {
-
-			// @todo: Refactor this (Make a function ?)
-			player := Empty
-			if value == Player1 || value == Player2 {
-				player = value
-			}
-
+			player := getPlayerValue(value)
 			count++
-			stones = append(stones, *NewStone(count, x, y, player))
+			grid.Stones = append(grid.Stones, *NewStone(count, x, y, player))
 		}
 	}
 
-	return stones
+	return *grid
 }
 
-func loadStoneByCoord(stones []Stone, x int, y int) (Stone, error) {
-	for _, stone := range stones {
+func getPlayerValue(value int) int {
+	if value == Player1 {
+		return Player1
+	}
+	if value == Player2 {
+		return Player2
+	}
+
+	return Empty
+}
+
+func loadStoneByCoord(grid Grid, x int, y int) (Stone, error) {
+	for _, stone := range grid.Stones {
 		if stone.x == x && stone.y == y {
 			return stone, nil
 		}

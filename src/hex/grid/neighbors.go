@@ -9,7 +9,7 @@ func NewNeighbor(stone Stone, distance int) *Neighbor {
 	return &Neighbor{stone, distance}
 }
 
-func GetNeighborsForStone(stones []Stone, stone Stone, player int) []Neighbor {
+func GetNeighborsForStone(grid Grid, stone Stone, player int) []Neighbor {
 	directions := getDirections()
 	var neighbors []Neighbor
 
@@ -18,7 +18,7 @@ func GetNeighborsForStone(stones []Stone, stone Stone, player int) []Neighbor {
 		xNeighbor := stone.x + direction[0]
 		yNeighbor := stone.y + direction[1]
 
-		if neighborStone, err := loadStoneByCoord(stones, xNeighbor, yNeighbor); err == nil {
+		if neighborStone, err := loadStoneByCoord(grid, xNeighbor, yNeighbor); err == nil {
 			distance := getDistanceByTypeOfStone(player, neighborStone)
 			if distance >= 0 {
 				neighbors = append(neighbors, *NewNeighbor(neighborStone, distance))
