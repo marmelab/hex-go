@@ -27,7 +27,6 @@ func getDirections() [6][2]int {
 }
 
 func GetGridFromArray(array []int) Grid {
-
 	length := len(array)
 	width := int(math.Sqrt(float64(length)))
 
@@ -39,16 +38,18 @@ func GetGridFromArray(array []int) Grid {
 	y := 0
 	x := 0
 	count := 0
-	for value := range array {
-		if x == width - 1 {
+	for _, value := range array {
+
+		count++
+		player := getPlayerValue(value)
+		grid.Stones = append(grid.Stones, *NewStone(count, x, y, player))
+
+		if x == width-1 {
 			x = 0
 			y++
 		} else {
 			x++
 		}
-
-		player := getPlayerValue(value)
-		grid.Stones = append(grid.Stones, *NewStone(count, x, y, player))
 	}
 
 	return *grid
