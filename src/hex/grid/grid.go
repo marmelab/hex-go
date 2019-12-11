@@ -2,6 +2,7 @@ package grid
 
 import (
 	"errors"
+	"math"
 )
 
 const Empty = 0
@@ -23,6 +24,34 @@ func NewGrid(stones []Stone, width int) *Grid {
 
 func getDirections() [6][2]int {
 	return [6][2]int{{0, -1}, {1, -1}, {1, 0}, {-1, 0}, {-1, 1}, {0, 1}}
+}
+
+func GetGridFromArray(array []int) Grid {
+
+	length := len(array)
+	width := int(math.Sqrt(float64(length)))
+
+	stones := make([]Stone, length)
+	stones = stones[:0]
+
+	grid := NewGrid(stones, width)
+
+	y := 0
+	x := 0
+	count := 0
+	for value := range array {
+		if x == width - 1 {
+			x = 0
+			y++
+		} else {
+			x++
+		}
+
+		player := getPlayerValue(value)
+		grid.Stones = append(grid.Stones, *NewStone(count, x, y, player))
+	}
+
+	return *grid
 }
 
 func GetGridFromMatrix(matrix [][]int) Grid {

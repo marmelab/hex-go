@@ -98,9 +98,33 @@ func TestUserCantGetAStoneWithWrongCoords(t *testing.T) {
 		{1, 1, 1, 0, 2},
 		{1, 0, 0, 0, 2},
 	}
-	stones := GetGridFromMatrix(matrix)
+	Grid := GetGridFromMatrix(matrix)
 
-	got, err := loadStoneByCoord(stones, -1, -1)
+	got, err := loadStoneByCoord(Grid, -1, -1)
+
+	expected := Stone{}
+
+	if got != expected {
+		t.Errorf("got %v; want %v", got, expected)
+	}
+
+	if err == nil {
+		t.Errorf("got %v; want not nil", err)
+	}
+}
+
+func TestUserCanGetAGridBasedOnAnArray(t *testing.T){
+	array := []int{
+		0, 1, 1, 0, 2,
+		0, 1, 2, 2, 2,
+		0, 1, 0, 0, 2,
+		1, 1, 1, 0, 2,
+		1, 0, 0, 0, 2,
+	}
+
+	Grid := GetGridFromArray(array)
+
+	got, err := loadStoneByCoord(Grid, -1, -1)
 
 	expected := Stone{}
 
