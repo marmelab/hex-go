@@ -3,10 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/RyanCarrier/dijkstra"
 	"hex/game"
 	Graph "hex/graph"
-	"hex/grid"
+	HexGrid "hex/grid"
 	"hex/state"
 	"io"
 	"net/http"
@@ -24,17 +23,14 @@ func IsWonHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	graph := &dijkstra.Graph{}
-	var endVertexId int
-	if currentGame.Player == grid.Player1 {
-		graph, endVertexId = Graph.BootstrapGraphPlayer1(currentGame.Matrix)
+	grid := HexGrid.GetGridFromMatrix(currentGame.Matrix)
 
-
-	} else if currentGame.Player == grid.Player2 {
-		graph, endVertexId = Graph.BootstrapGraphPlayer2(currentGame.Matrix)
-	}
+	endVertexId := Graph.GetEndVertexId(grid.Width)
+	graph := Graph.BuildGraphForPlayer(grid, currentGame.Player)
 
 	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
+
+
 	response := fmt.Sprintf(`{"isWon": %t}`, state.IsWon(bestPath))
 	_, _ = io.WriteString(w, response)
 

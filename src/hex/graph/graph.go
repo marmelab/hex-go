@@ -8,6 +8,18 @@ import (
 
 const StartVertexId = 0
 
+func BuildGraphForPlayer(grid HexGrid.Grid, player int) *dijkstra.Graph {
+
+	var graph *dijkstra.Graph
+	if player == HexGrid.Player1 {
+		graph = BuildGraphForPlayer1(grid)
+	} else if player == HexGrid.Player2 {
+		graph = BuildGraphForPlayer2(grid)
+	}
+
+	return graph
+}
+
 func BuildGraphForPlayer1(grid HexGrid.Grid) *dijkstra.Graph {
 	graph := initGraph(grid.Width)
 
