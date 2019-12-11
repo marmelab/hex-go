@@ -7,7 +7,7 @@ import (
 )
 
 type Game struct {
-	Matrix [][]int
+	Array []int
 	Player int
 }
 
@@ -15,7 +15,7 @@ type Game struct {
 // This function determines if a game is won based on a game
 func IsWinningGame(game Game) bool {
 
-	Grid := grid.GetGridFromMatrix(game.Matrix)
+	Grid := grid.GetGridFromArray(game.Array)
 
 	endVertexId := graph.GetEndVertexId(Grid.Width)
 	Graph := graph.BuildGraphForPlayer(Grid, game.Player)
