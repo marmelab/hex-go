@@ -2,9 +2,12 @@ version: '3.7'
 
 services:
   hex-go:
+    container_name: hex-ai
     build:
       context: docker
     working_dir: /go
     volumes:
       - .:/go
-    command: go run /go/src/hex/main.go && tail -f /dev/null
+    ports:
+      - 8080:8080
+    command: go run /go/src/hex/main.go

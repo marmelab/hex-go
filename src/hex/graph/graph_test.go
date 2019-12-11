@@ -55,13 +55,13 @@ func TestUserCanDetectTheShortestPathForPlayer1(t *testing.T) {
 func TestUserCanDetectTheShortestPathForPlayer2(t *testing.T) {
 	matrix := [][]int{
 		{0, 1, 2},
-		{1, 2, 0},
-		{2, 1, 0},
+		{1, 0, 0},
+		{2, 2, 2},
 	}
 
 	graph, endVertexId := BootstrapGraphPlayer2(matrix)
 
-	path := []int{StartVertexId, 7, 5, 3, endVertexId}
+	path := []int{StartVertexId, 7, 8, 9, endVertexId}
 	expected := dijkstra.BestPath{Distance: int64(0), Path: path}
 
 	got, _ := graph.Shortest(StartVertexId, endVertexId)

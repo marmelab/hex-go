@@ -1,12 +1,27 @@
 package graph
 
 import (
+	"errors"
 	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 	HexGrid "hex/grid"
 )
 
 const StartVertexId = 0
+
+func BuildGraphForPlayer(grid HexGrid.Grid, player int) *dijkstra.Graph {
+
+	var graph *dijkstra.Graph
+	if player == HexGrid.Player1 {
+		graph = BuildGraphForPlayer1(grid)
+	} else if player == HexGrid.Player2 {
+		graph = BuildGraphForPlayer2(grid)
+	}else{
+		panic(errors.New("unable to determine player"))
+	}
+
+	return graph
+}
 
 func BuildGraphForPlayer1(grid HexGrid.Grid) *dijkstra.Graph {
 	graph := initGraph(grid.Width)
@@ -87,8 +102,9 @@ func addPlayer2EndArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
 	EndVertexId := GetEndVertexId(grid.Width)
 	columnIndex := grid.Width
 	for i := range grid.Stones {
-		if i == columnIndex {
-			currentStone := grid.Stones[i-1]
+
+		if i+1 == columnIndex {
+			currentStone := grid.Stones[i]
 			distance := getDistance(HexGrid.Player2, currentStone)
 
 			if nil != graph.AddArc(currentStone.Id, EndVertexId, distance) {
