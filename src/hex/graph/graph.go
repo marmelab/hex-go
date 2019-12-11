@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"errors"
 	"fmt"
 	"github.com/RyanCarrier/dijkstra"
 	HexGrid "hex/grid"
@@ -15,6 +16,8 @@ func BuildGraphForPlayer(grid HexGrid.Grid, player int) *dijkstra.Graph {
 		graph = BuildGraphForPlayer1(grid)
 	} else if player == HexGrid.Player2 {
 		graph = BuildGraphForPlayer2(grid)
+	}else{
+		panic(errors.New("unable to determine player"))
 	}
 
 	return graph

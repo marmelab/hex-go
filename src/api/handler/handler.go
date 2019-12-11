@@ -4,33 +4,27 @@ import (
 	"encoding/json"
 	"fmt"
 	"hex/game"
-	Graph "hex/graph"
-	HexGrid "hex/grid"
-	"hex/state"
 	"io"
 	"net/http"
 )
 
-func IsWonHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
+func IsWonHandler(responseWriter http.ResponseWriter, request *http.Request) {
+	currentGame := getGameByRequest(request)
 
-	decoder := json.NewDecoder(r.Body)
+	response := fmt.Sprintf(`{"isWon": %t}`, game.IsWinningGame(currentGame))
+
+	responseWriter.WriteHeader(http.StatusOK)
+	responseWriter.Header().Set("Content-Type", "application/json")
+	io.WriteString(responseWriter, response)
+}
+
+func getGameByRequest(request *http.Request) game.Game {
+	decoder := json.NewDecoder(request.Body)
 	var currentGame game.Game
 	err := decoder.Decode(&currentGame)
 
 	if err != nil {
 		panic(err)
 	}
-
-	grid := HexGrid.GetGridFromMatrix(currentGame.Matrix)
-
-	endVertexId := Graph.GetEndVertexId(grid.Width)
-	graph := Graph.BuildGraphForPlayer(grid, currentGame.Player)
-
-	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
-
-	response := fmt.Sprintf(`{"isWon": %t}`, state.IsWon(bestPath))
-	_, _ = io.WriteString(w, response)
-
+	return currentGame
 }

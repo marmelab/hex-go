@@ -24,20 +24,20 @@ func TestUserCanCheckIfPlayer1HasWon(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rr := httptest.NewRecorder()
+	recorder := httptest.NewRecorder()
 
 	handler := http.HandlerFunc(IsWonHandler)
-	handler.ServeHTTP(rr, req)
+	handler.ServeHTTP(recorder, req)
 
-	if status := rr.Code; status != http.StatusOK {
+	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 
 	expected := `{"isWon": true}`
-	if rr.Body.String() != expected {
+	if recorder.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
+			recorder.Body.String(), expected)
 	}
 }
 
@@ -58,19 +58,19 @@ func TestUserCanCheckIfPlayer2HasWon(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rr := httptest.NewRecorder()
+	recorder := httptest.NewRecorder()
 
 	handler := http.HandlerFunc(IsWonHandler)
-	handler.ServeHTTP(rr, req)
+	handler.ServeHTTP(recorder, req)
 
-	if status := rr.Code; status != http.StatusOK {
+	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 
 	expected := `{"isWon": true}`
-	if rr.Body.String() != expected {
+	if recorder.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
+			recorder.Body.String(), expected)
 	}
 }
