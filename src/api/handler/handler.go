@@ -30,7 +30,6 @@ func IsWonHandler(w http.ResponseWriter, r *http.Request) {
 
 	bestPath, _ := graph.Shortest(Graph.StartVertexId, endVertexId)
 
-
 	response := fmt.Sprintf(`{"isWon": %t}`, state.IsWon(bestPath))
 	_, _ = io.WriteString(w, response)
 

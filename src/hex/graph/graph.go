@@ -99,8 +99,9 @@ func addPlayer2EndArcsToGraph(grid HexGrid.Grid, graph *dijkstra.Graph) {
 	EndVertexId := GetEndVertexId(grid.Width)
 	columnIndex := grid.Width
 	for i := range grid.Stones {
-		if i == columnIndex {
-			currentStone := grid.Stones[i-1]
+
+		if i+1 == columnIndex {
+			currentStone := grid.Stones[i]
 			distance := getDistance(HexGrid.Player2, currentStone)
 
 			if nil != graph.AddArc(currentStone.Id, EndVertexId, distance) {
