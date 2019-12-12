@@ -26,7 +26,7 @@ func setupResponse(writer *http.ResponseWriter) {
 	(*writer).Header().Set("Content-Type", "application/json")
 	(*writer).Header().Set("Access-Control-Allow-Origin", "*")
 	(*writer).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	(*writer).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	(*writer).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, content-type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
 func getGameByRequest(request *http.Request) game.Game {
