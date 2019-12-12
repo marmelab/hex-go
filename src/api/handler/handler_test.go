@@ -74,3 +74,33 @@ func TestUserCanCheckIfPlayer2HasWon(t *testing.T) {
 			recorder.Body.String(), expected)
 	}
 }
+
+func TestUserCanGetAnAdviceOnNextMove(t *testing.T) {
+
+	jsonData := []byte(`
+	{
+		"matrix": [
+			[1, 1, 0],
+			[2, 0, 2],
+			[2, 0, 0]
+		],
+		"player": 2
+	}`)
+
+	req, err := http.NewRequest("POST", "/games/advices", bytes.NewBuffer(jsonData))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	recorder := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(IsWonHandler)
+	handler.ServeHTTP(recorder, req)
+
+	if status := recorder.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	// @todo Check the body of the request
+}

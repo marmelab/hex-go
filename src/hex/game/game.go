@@ -7,20 +7,20 @@ import (
 )
 
 type Game struct {
-	Array []int
+	Array  []int
 	Player int
 }
 
-
 // This function determines if a game is won based on a game
 func IsWinningGame(game Game) bool {
-
 	Grid := grid.GetGridFromArray(game.Array)
-
-	endVertexId := graph.GetEndVertexId(Grid.Width)
-	Graph := graph.BuildGraphForPlayer(Grid, game.Player)
-
-	bestPath, _ := Graph.Shortest(graph.StartVertexId, endVertexId)
-
+	bestPath, _ := graph.GetBestPathForGraph(Grid, game.Player)
 	return state.IsWon(bestPath)
+}
+
+// This function determines which stone should be played at the next time
+func GetAdvice(game Game) int {
+	Grid := grid.GetGridFromArray(game.Array)
+	bestPath, Graph := graph.GetBestPathForGraph(Grid, game.Player)
+	return state.AdviceForNextMove(bestPath, Graph)
 }
