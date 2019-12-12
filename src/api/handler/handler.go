@@ -22,6 +22,20 @@ func IsWonHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	io.WriteString(responseWriter, response)
 }
 
+func GetAdviceHandler(responseWriter http.ResponseWriter, request *http.Request) {
+
+	setupResponse(&responseWriter)
+	if (*request).Method == "OPTIONS" {
+		return
+	}
+
+	currentGame := getGameByRequest(request)
+	response := fmt.Sprintf(`{"advice": %d}`, game.GetAdvice(currentGame))
+
+	responseWriter.WriteHeader(http.StatusOK)
+	io.WriteString(responseWriter, response)
+}
+
 func setupResponse(writer *http.ResponseWriter) {
 	(*writer).Header().Set("Content-Type", "application/json")
 	(*writer).Header().Set("Access-Control-Allow-Origin", "*")

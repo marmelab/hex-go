@@ -18,7 +18,6 @@ func IsClosestAsOpponent(bestPath dijkstra.BestPath, bestPathOpponent dijkstra.B
 }
 
 func AdviceForNextMove(bestPath dijkstra.BestPath, graph *dijkstra.Graph) int {
-
 	for i, id := range bestPath.Path {
 		vertex, _ := graph.GetVertex(id)
 
@@ -36,5 +35,4 @@ func AdviceForNextMove(bestPath dijkstra.BestPath, graph *dijkstra.Graph) int {
 
 	}
 	return 0
-
 }
