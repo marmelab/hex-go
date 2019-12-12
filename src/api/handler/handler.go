@@ -9,13 +9,24 @@ import (
 )
 
 func IsWonHandler(responseWriter http.ResponseWriter, request *http.Request) {
-	currentGame := getGameByRequest(request)
 
+	setupResponse(&responseWriter)
+	if (*request).Method == "OPTIONS" {
+		return
+	}
+
+	currentGame := getGameByRequest(request)
 	response := fmt.Sprintf(`{"isWon": %t}`, game.IsWinningGame(currentGame))
 
 	responseWriter.WriteHeader(http.StatusOK)
-	responseWriter.Header().Set("Content-Type", "application/json")
 	io.WriteString(responseWriter, response)
+}
+
+func setupResponse(writer *http.ResponseWriter) {
+	(*writer).Header().Set("Content-Type", "application/json")
+	(*writer).Header().Set("Access-Control-Allow-Origin", "*")
+	(*writer).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*writer).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
 func getGameByRequest(request *http.Request) game.Game {
