@@ -113,7 +113,7 @@ func TestUserCantGetAStoneWithWrongCoords(t *testing.T) {
 	}
 }
 
-func TestUserCanGetAGridBasedOnAnArray(t *testing.T){
+func TestUserCanGetAGridBasedOnAnArray(t *testing.T) {
 	array := []int{
 		0, 1, 1, 0, 2,
 		0, 1, 2, 2, 2,

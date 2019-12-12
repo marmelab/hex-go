@@ -11,7 +11,7 @@ func DisplayStonesAsMatrix(grid HexGrid.Grid) {
 	for i, stone := range grid.Stones {
 		if i%width == 0 {
 			fmt.Println()
-			lines ++
+			lines++
 			for y := 0; y < lines; y++ {
 				fmt.Print(" ")
 			}
